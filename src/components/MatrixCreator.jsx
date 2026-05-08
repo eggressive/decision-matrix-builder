@@ -49,17 +49,15 @@ const MatrixCreator = ({ onSave, onCancel }) => {
   };
 
   const removeCriterion = (id) => {
+    const remaining = matrix.criteria.filter(c => c.id !== id);
+    const removedWeight = matrix.criteria.find(c => c.id === id)?.weight || 0;
+    const scale = 1 - removedWeight;
+
     setMatrix({
       ...matrix,
-      criteria: matrix.criteria.filter(crit => crit.id !== id)
-    });
-    // Recalculate weights to sum to 1
-    const totalWeight = matrix.criteria.reduce((sum, c) => sum + c.weight, 0);
-    setMatrix({
-      ...matrix,
-      criteria: matrix.criteria.map(c => ({
+      criteria: remaining.map(c => ({
         ...c,
-        weight: c.id === id ? 0 : c.weight / (1 - (matrix.criteria.find(crit => crit.id === id)?.weight || 0))
+        weight: scale > 0 ? parseFloat((c.weight / scale).toFixed(2)) : c.weight
       }))
     });
   };
