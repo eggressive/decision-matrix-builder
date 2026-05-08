@@ -2,7 +2,7 @@
 
 A web-based tool to help you make better decisions using structured analysis of pros and cons. Create decision matrices, score options against criteria, and visualize results to make informed choices.
 
-[![Screenshot](screenshot.png)](https://github.com/eggressive/decision-matrix-builder)
+![Application Screenshot](screenshot.png)
 
 ## 🚀 Features
 
