@@ -434,20 +434,20 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Matrix Grid */
-.matrix-grid {
+/* Scoring table wrapper */
+.scoring-table-wrapper {
   overflow-x: auto;
   margin-bottom: 1.5rem;
 }
 
-.matrix-grid table {
+.scoring-table-wrapper table {
   width: 100%;
   border-collapse: collapse;
   min-width: 600px;
 }
 
-.matrix-grid th,
-.matrix-grid td {
+.scoring-table-wrapper th,
+.scoring-table-wrapper td {
   padding: 0.75rem;
   text-align: center;
   border: 1px solid #e2e8f0;
@@ -669,7 +669,7 @@ body {
     grid-template-columns: 1fr;
   }
   
-  .matrix-grid table {
+  .scoring-table-wrapper table {
     min-width: 100%;
   }
   

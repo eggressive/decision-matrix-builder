@@ -3,7 +3,7 @@ import ScoringCell from './ScoringCell.jsx';
 
 const MatrixGrid = ({ options, criteria, getScore, onUpdateScore, selectedCell, onSelectCell }) => {
   return (
-    <div className="matrix-grid">
+    <div className="scoring-table-wrapper">
       <table>
         <thead>
           <tr>
