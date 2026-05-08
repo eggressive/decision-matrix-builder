@@ -78,7 +78,17 @@ const MatrixCreator = ({ onSave, onCancel }) => {
       alert('Criterion weights must sum to 1');
       return;
     }
-    onSave(matrix);
+    const matrixWithScores = {
+      ...matrix,
+      scores: matrix.options.flatMap(opt =>
+        matrix.criteria.map(crit => ({
+          optionId: opt.id,
+          criterionId: crit.id,
+          score: 0
+        }))
+      )
+    };
+    onSave(matrixWithScores);
   };
 
   const calculateTotalWeight = () => {

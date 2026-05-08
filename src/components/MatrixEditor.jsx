@@ -4,16 +4,26 @@ import ScoringCell from './ScoringCell.jsx';
 import ExportButton from './ExportButton.jsx';
 
 const MatrixEditor = ({ matrix, onSave, onCancel }) => {
-  const [editedMatrix, setEditedMatrix] = useState(matrix);
+  const [editedMatrix, setEditedMatrix] = useState(() => ({
+    ...matrix,
+    scores: matrix.scores || [],
+    prosCons: matrix.prosCons || []
+  }));
   const [selectedCell, setSelectedCell] = useState(null);
 
   const updateScore = (optionId, criterionId, score) => {
-    const updatedScores = editedMatrix.scores.map(scoreObj => 
-      scoreObj.optionId === optionId && scoreObj.criterionId === criterionId
-        ? { ...scoreObj, score }
-        : scoreObj
+    const scores = editedMatrix.scores || [];
+    const existingIndex = scores.findIndex(
+      s => s.optionId === optionId && s.criterionId === criterionId
     );
-    
+    let updatedScores;
+    if (existingIndex >= 0) {
+      updatedScores = scores.map((s, i) =>
+        i === existingIndex ? { ...s, score } : s
+      );
+    } else {
+      updatedScores = [...scores, { optionId, criterionId, score }];
+    }
     setEditedMatrix({
       ...editedMatrix,
       scores: updatedScores
