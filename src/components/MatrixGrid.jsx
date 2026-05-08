@@ -34,19 +34,12 @@ const MatrixGrid = ({ options, criteria, getScore, onUpdateScore, selectedCell, 
                 </td>
               ))}
               <td className="total-score">
-                {options
-                  .map(opt => ({
-                    ...opt,
-                    score: options
-                      .flatMap(opt => criteria.map(crit => ({
-                        optionId: opt.id,
-                        criterionId: crit.id,
-                        score: getScore(opt.id, crit.id) * crit.weight
-                      })))
-                      .filter(s => s.optionId === option.id)
-                      .reduce((sum, s) => sum + s.score, 0)
-                  }))
-                  .find(opt => opt.id === option.id)?.score?.toFixed(2) || '0.00'}
+                {criteria
+                  .reduce((sum, crit) => {
+                    const s = getScore(option.id, crit.id);
+                    return sum + (s * crit.weight);
+                  }, 0)
+                  .toFixed(2)}
               </td>
             </tr>
           ))}

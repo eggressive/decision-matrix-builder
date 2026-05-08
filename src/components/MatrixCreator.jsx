@@ -147,7 +147,7 @@ const MatrixCreator = ({ onSave, onCancel }) => {
                   type="text"
                   value={newOption}
                   onChange={(e) => setNewOption(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addOption()}
+                  onKeyDown={(e) => e.key === 'Enter' && addOption()}
                   placeholder="Add new option..."
                 />
                 <button onClick={addOption}>Add</button>
@@ -249,7 +249,7 @@ const MatrixCreator = ({ onSave, onCancel }) => {
               <h4>Criteria ({matrix.criteria.length})</h4>
               <ul>
                 {matrix.criteria.map(crit => (
-                  <li>{crit.title} (Weight: {crit.weight})</li>
+                  <li key={crit.id}>{crit.title} (Weight: {crit.weight})</li>
                 ))}
               </ul>
               

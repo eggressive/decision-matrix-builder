@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ScoringCell = ({ value, onChange, selected, onSelect }) => {
   const [editing, setEditing] = useState(false);
-  const [localValue, setLocalValue] = useState(value || '');
+  const [localValue, setLocalValue] = useState(value ?? '');
+
+  useEffect(() => {
+    if (!editing) {
+      setLocalValue(value ?? '');
+    }
+  }, [value, editing]);
 
   const handleClick = () => {
     onSelect();
@@ -17,7 +23,7 @@ const ScoringCell = ({ value, onChange, selected, onSelect }) => {
     setEditing(false);
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleBlur();
     }
@@ -37,7 +43,7 @@ const ScoringCell = ({ value, onChange, selected, onSelect }) => {
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
           onBlur={handleBlur}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           autoFocus
         />
       ) : (

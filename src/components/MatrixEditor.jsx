@@ -114,7 +114,7 @@ const MatrixEditor = ({ matrix, onSave, onCancel }) => {
                     <input 
                       type="text"
                       placeholder="Add pro..."
-                      onKeyPress={(e) => e.key === 'Enter' && addProCon(option.id, 'pro', e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && addProCon(option.id, 'pro', e.target.value)}
                     />
                   </div>
                 </div>
@@ -135,7 +135,7 @@ const MatrixEditor = ({ matrix, onSave, onCancel }) => {
                     <input 
                       type="text"
                       placeholder="Add con..."
-                      onKeyPress={(e) => e.key === 'Enter' && addProCon(option.id, 'con', e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && addProCon(option.id, 'con', e.target.value)}
                     />
                   </div>
                 </div>

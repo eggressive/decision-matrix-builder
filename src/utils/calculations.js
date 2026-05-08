@@ -17,7 +17,7 @@ export const calculateAllScores = (matrix) => {
 
 export const rankOptions = (matrix) => {
   const scored = calculateAllScores(matrix);
-  return scored
+  return [...scored]
     .sort((a, b) => b.totalScore - a.totalScore)
     .map((option, index) => ({ ...option, rank: index + 1 }));
 };
