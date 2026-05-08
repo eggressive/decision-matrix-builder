@@ -2,6 +2,14 @@ import React from 'react';
 import { saveAs } from 'file-saver';
 
 const ExportButton = ({ matrix }) => {
+  const escapeCSV = (value) => {
+    const str = String(value ?? '');
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  };
+
   const exportToCSV = () => {
     const headers = ['Option', ...matrix.criteria.map(c => c.title), 'Total Score'];
     const rows = matrix.options.map(option => {
@@ -14,23 +22,27 @@ const ExportButton = ({ matrix }) => {
     });
 
     const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.join(',')),
-      ['# Pros & Cons'],
+      headers.map(escapeCSV).join(','),
+      ...rows.map(row => row.map(escapeCSV).join(',')),
+      [],
+      ['Pros & Cons'],
+      ['Option', 'Type', 'Content'],
       ...matrix.options.flatMap(option => [
-        `${option.title} - Pros`,
-        ...matrix.prosCons?.filter(pc => pc.optionId === option.id && pc.type === 'pro').map(pc => pc.content) || [],
-        `${option.title} - Cons`,
-        ...matrix.prosCons?.filter(pc => pc.optionId === option.id && pc.type === 'con').map(pc => pc.content) || []
-      ])
+        ...(matrix.prosCons?.filter(pc => pc.optionId === option.id && pc.type === 'pro').map(pc =>
+          [option.title, 'Pro', pc.content]
+        ) || []),
+        ...(matrix.prosCons?.filter(pc => pc.optionId === option.id && pc.type === 'con').map(pc =>
+          [option.title, 'Con', pc.content]
+        ) || [])
+      ]).map(row => row.map(escapeCSV).join(','))
     ].join('\n');
 
     const blob = new Blob(['\ufeff', csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, `${matrix.title.replace(/\s+/g, '_')}_decision_matrix.csv`);
   };
 
-  const exportToPDF = () => {
-    // Simple text-based PDF export for now
+  const exportToText = () => {
+    // Simple text-based export for now
     const content = `
 Decision Matrix Report
 ======================
@@ -81,8 +93,8 @@ ${matrix.options.flatMap(option => [
       <button className="btn-secondary" onClick={exportToCSV}>
         Export CSV
       </button>
-      <button className="btn-secondary" onClick={exportToPDF}>
-        Export PDF/Text
+      <button className="btn-secondary" onClick={exportToText}>
+        Export Text
       </button>
     </div>
   );

@@ -114,7 +114,12 @@ const MatrixEditor = ({ matrix, onSave, onCancel }) => {
                     <input 
                       type="text"
                       placeholder="Add pro..."
-                      onKeyDown={(e) => e.key === 'Enter' && addProCon(option.id, 'pro', e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          addProCon(option.id, 'pro', e.target.value);
+                          e.target.value = '';
+                        }
+                      }}
                     />
                   </div>
                 </div>
@@ -135,7 +140,12 @@ const MatrixEditor = ({ matrix, onSave, onCancel }) => {
                     <input 
                       type="text"
                       placeholder="Add con..."
-                      onKeyDown={(e) => e.key === 'Enter' && addProCon(option.id, 'con', e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          addProCon(option.id, 'con', e.target.value);
+                          e.target.value = '';
+                        }
+                      }}
                     />
                   </div>
                 </div>

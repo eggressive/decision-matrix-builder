@@ -10,13 +10,6 @@ const MatrixCard = ({ matrix, onEdit, onDelete }) => {
     return total.toFixed(2);
   };
 
-  const getScoreCount = () => {
-    if (!matrix.scores) return 0;
-    const optionCount = matrix.options.length;
-    const criterionCount = matrix.criteria.length;
-    return optionCount * criterionCount;
-  };
-
   return (
     <div className="matrix-card">
       <h3>{matrix.title}</h3>
